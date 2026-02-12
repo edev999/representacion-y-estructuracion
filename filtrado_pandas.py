@@ -1,5 +1,6 @@
 import sqlite3
 import pandas as pd
+from pathlib import Path
 
 # ---------------------------------
 # 1. Conectar a la base de datos
@@ -48,4 +49,5 @@ print(df)
 # ---------------------------------
 # 5. Guardar en CSV
 # ---------------------------------
-df.to_csv("equipos_filtrados_metricas.csv", index=False)
+Path("data_output").mkdir(parents=True, exist_ok=True)
+df.to_csv("data_output/equipos_filtrados_metricas.csv", index=False)

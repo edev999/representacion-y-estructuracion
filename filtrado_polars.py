@@ -1,5 +1,6 @@
 import sqlite3
 import polars as pl
+from pathlib import Path
 
 # ---------------------------------
 # 1. Conectar a la base de datos
@@ -28,13 +29,12 @@ df = pl.read_database(query, connection=conn)
 # Cerrar la conexión
 conn.close()
 
-if(df.select(pl.all().null_count()) != 0):
-    df = df.filter(pl.col("Equipo").is_not_null())
-    df = df.filter(pl.col("Puntos").is_not_null())
-    df = df.with_columns(
-        pl.col("GolesAFavor").fill_null(0),
-        pl.col("GolesEnContra").fill_null(0)
-    )
+df = df.filter(pl.col("Equipo").is_not_null())
+df = df.filter(pl.col("Puntos").is_not_null())
+df = df.with_columns(
+    pl.col("GolesAFavor").fill_null(0),
+    pl.col("GolesEnContra").fill_null(0)
+)
 
 # ---------------------------------
 # 3. Calcular métricas nuevas
@@ -53,4 +53,5 @@ print(df)
 # ---------------------------------
 # 5. Guardar en CSV opcional
 # ---------------------------------
-df.write_csv("equipos_filtrados_metricas_polars.csv")
+Path("data_output").mkdir(parents=True, exist_ok=True)
+df.write_csv("data_output/equipos_filtrados_metricas_polars.csv")
