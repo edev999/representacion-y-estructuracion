@@ -28,6 +28,14 @@ df = pl.read_database(query, connection=conn)
 # Cerrar la conexión
 conn.close()
 
+if(df.select(pl.all().null_count()) != 0):
+    df = df.filter(pl.col("Equipo").is_not_null())
+    df = df.filter(pl.col("Puntos").is_not_null())
+    df = df.with_columns(
+        pl.col("GolesAFavor").fill_null(0),
+        pl.col("GolesEnContra").fill_null(0)
+    )
+
 # ---------------------------------
 # 3. Calcular métricas nuevas
 # ---------------------------------

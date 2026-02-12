@@ -1,6 +1,7 @@
 import polars as pl
 import plotly.graph_objects as go
 import numpy as np
+import plotly.express as px
 
 # -----------------------------------------------
 # 1. Leer CSV filtrado con Polars
@@ -44,7 +45,6 @@ fig.add_trace(go.Scatter3d(
     text=df_pd["Equipo"],
     hovertemplate=
         "<b>%{text}</b><br>" +
-        "Puntos: %{x}<br>" +
         "% Victorias: %{y:.2f}<br>" +
         "Dif Goles: %{z}<extra></extra>"
 ))
@@ -54,7 +54,7 @@ fig.update_layout(
     scene=dict(
         xaxis=dict(title="GolesAFavor", nticks=5),
         yaxis=dict(title="GolesEnContra", nticks=5),
-        zaxis=dict(title="PromPuntosPorPartido", nticks=5),
+        zaxis=dict(title="PorcVictorias", nticks=5),
     ),
     width=800,
     height=700,
@@ -63,4 +63,19 @@ fig.update_layout(
 
 fig.show()
 
+fig1 = px.scatter(
+    df_pd, 
+    x="DifGoles", 
+    y="Puntos", 
+    hover_name="Equipo",
+    labels={
+        "DifGoles": "Diferencia de Goles",
+        "Puntos": "Puntos Totales"
+    },
+    title="Relación entre Diferencia de Goles y Puntos por Equipo"
+)
+
+fig1.update_traces(marker=dict(size=12, line=dict(width=1, color='DarkSlateGrey')))
+
+fig1.show()
 
