@@ -13,16 +13,16 @@ Clona este repositorio.
 
 Instala las dependencias:
 
-Bash
+```Bash
 pip install -r requirements.txt
-
+```
 Ejecuta el script principal:
 
-Bash
+```bash
 python main.py
 python filtrado_polars.py
 python graficos_polars_interactivo.py
-
+```
 Visualizaciones Incluidas
 Scatter Plot 2D: Relación entre la Diferencia de Goles y el Promedio de los Puntos por Partido. Ideal para ver la consistencia del equipo.
 
@@ -38,3 +38,4 @@ Detección de Outliers: El gráfico 3D permite identificar equipos que tienen un
 Autores
 
 Proyecto desarrollado por Eva María García Gálvez y Pablo Baeza Gómez.
+
