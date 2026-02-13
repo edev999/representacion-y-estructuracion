@@ -4,7 +4,7 @@ import plotly.express as px
 # -------------------------------------------------------
 # 1. Leer CSV filtrado
 # -------------------------------------------------------
-df = pd.read_csv("equipos_filtrados_metricas_polars.csv")
+df = pd.read_csv("data_output/equipos_filtrados_metricas_polars.csv")
 
 # -------------------------------------------------------
 # 2. Procesamiento con pandas (métricas derivadas)

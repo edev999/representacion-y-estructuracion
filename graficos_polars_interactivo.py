@@ -6,7 +6,7 @@ import plotly.express as px
 # -----------------------------------------------
 # 1. Leer CSV filtrado con Polars
 # -----------------------------------------------
-df = pl.read_csv("equipos_filtrados_metricas.csv")
+df = pl.read_csv("data_output/equipos_filtrados_metricas.csv")
 
 # -----------------------------------------------
 # 2. Procesamiento con Polars
@@ -52,9 +52,9 @@ fig.add_trace(go.Scatter3d(
 fig.update_layout(
     title="Nube 3D: Puntos vs %Victorias vs DifGoles",
     scene=dict(
-        xaxis=dict(title="GolesAFavor", nticks=5),
-        yaxis=dict(title="GolesEnContra", nticks=5),
-        zaxis=dict(title="PorcVictorias", nticks=5),
+        xaxis=dict(title="Puntos Totales", nticks=5),
+        yaxis=dict(title="% Victorias", nticks=5),
+        zaxis=dict(title="Diferencia de Goles", nticks=5),
     ),
     width=800,
     height=700,
@@ -66,13 +66,13 @@ fig.show()
 fig1 = px.scatter(
     df_pd, 
     x="DifGoles", 
-    y="Puntos", 
+    y="PromPuntosPorPartido", 
     hover_name="Equipo",
     labels={
         "DifGoles": "Diferencia de Goles",
-        "Puntos": "Puntos Totales"
+        "PromPuntosPorPartido": "Promedio de Puntos por Partido"
     },
-    title="Relación entre Diferencia de Goles y Puntos por Equipo"
+    title="Relación entre Diferencia de Goles y Promedio de Puntos por Partido y Equipo"
 )
 
 fig1.update_traces(marker=dict(size=12, line=dict(width=1, color='DarkSlateGrey')))

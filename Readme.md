@@ -1,160 +1,40 @@
-🏆 Proyecto de Automatización y Almacenamiento de Datos de Fútbol
+Análisis de datos de ligas de fútbol
+Este proyecto realiza un proceso de extracción, transformación, carga y análisis visual de estadísticas de equipos de fútbol utilizando una base de datos SQLite y Polars.
 
-📋 Descripción del Proyecto
+Características
+Ingesta: Uso de Polars para manejar grandes volúmenes de datos desde SQL, en este caso SQLite.
 
-Este proyecto forma parte de una actividad colaborativa cuyo objetivo es automatizar la recopilación, almacenamiento y gestión de datos obtenidos desde fuentes oficiales.
-Actualmente, el sistema obtiene información actualizada sobre dos ligas de fútbol utilizando la API pública de ESPN:
+Ingeniería de variables: Cálculo de métricas avanzadas como % de Victorias, Diferencia de Goles y Promedio de Puntos por Partido.
 
-✔ LaLiga (España)
-✔ Premier League (Inglaterra)
+Visualización Interactiva: Gráficos 3D y de dispersión utilizando Plotly para identificar patrones de rendimiento. Los Gráficos se exportan en un HTML interactivo que se abre directamente en el navegador. Ambos gráficos son interactivos, en el caso de Scatter3D se permite analizar el gráfico en tres dimensiones, y en el segundo gráfico se puede seleccionar un tramo para ampliar la vista sobre una zona específica.
 
-Los datos se almacenan en una base de datos SQLite para su posterior análisis y visualización.
+Instalación y Uso
+Clona este repositorio.
 
-El proyecto consta de un proceso automatizado que:
+Instala las dependencias:
 
-- Consulta datos de clasificación de equipos desde una API.
+Bash
+pip install -r requirements.txt
 
-- Limpia y organiza los datos obtenidos.
+Ejecuta el script principal:
 
-- Los almacena en una base de datos estructurada (soccer.db) para su posterior análisis.
-
-- Genera gráficas comparativas de goles a favor y en contra por liga (funcionalidad extra).
-
-🎯 Objetivos del Proyecto
-
-▪ Automatizar la obtención de datos desde una fuente contrastada (API de ESPN).
-
-▪ Diseñar una estructura de base de datos relacional para almacenar la información.
-
-▪ Implementar funciones de inserción y actualización de datos en SQLite.
-
-▪ Trabajar de forma colaborativa con control de versiones mediante GitHub.
-
-🧩 Estructura del Proyecto
-
-📂 Obtencion-Almacenamiento-Datos
-├── main.py		# Script principal que obtiene y procesa los datos de varias ligas
-├── db.py		# Módulo encargado de la gestión de la base de datos
-├── soccer.db		# Base de datos SQLite donde se almacenan los datos
-└── Readme.md		# Documento de descripción del proyecto
-
-⚙️ Funcionamiento
-
-1. Obtención de datos (main.py)
-
-El script realiza una solicitud HTTP a la API de ESPN para obtener información sobre la clasificación de los equipos de LaLiga y la Premier League:
-
-ligas_urls = {
-    "LaLiga": "https://site.web.api.espn.com/apis/v2/sports/soccer/esp.1/standings",
-    "Premier League": "https://site.web.api.espn.com/apis/v2/sports/soccer/eng.1/standings"
-}
-
-Posteriormente:
-
-Extrae estadísticas relevantes (partidos jugados, victorias, derrotas, puntos, etc.).
-
-Estructura los datos en un diccionario.
-
-Inserta o actualiza la información en la base de datos mediante funciones del módulo db.py.
-
-Genera gráficas separadas para cada liga mostrando goles a favor y en contra por equipo.
-
-2. Gestión de la base de datos (db.py)
-
-El módulo db.py se encarga de:
-
-Crear las tablas (league, teams, stats).
-
-Insertar nuevas ligas y equipos.
-
-Actualizar estadísticas de los equipos.
-
-Evitar duplicación de registros mediante verificaciones previas.
-
-Las tablas tienen las siguientes estructuras:
-
-==========================
-      Tabla: league
-==========================
-| id |   name   |  year  |
-|----|----------|--------|
-|  1 |  LaLiga  |  2024  |
-==========================
-
-
-=================================================================
-						Tabla: teams
-=================================================================
-|	id	|		name		|		logo		| 	league_id	|
-|-------|-------------------|-------------------|---------------|
-|	1	|	Real Madrid	    |  	 https://...	|	    1		|
-=================================================================
-
-
-==================================================================================================
-        								Tabla: stats
-==================================================================================================
-| id | team_id  | points | played | goals_against | goals_for | wins | draws | losses | position |
-|----|----------|--------|--------|---------------|-----------|------|-------|--------|----------|
-|  1 |    1     |   85   |   38   |       30      |     70    |  27  |   4   |    7   |     1    |
-==================================================================================================
-
-
-🧠 Tecnologías Utilizadas
-
-+ Python 3
-
-+ SQLite3
-
-+ Requests (para acceder a la API)
-
-+ JSON (para estructurar la respuesta de la API)
-
-+ Matplotlib (para generar gráficas)
-
-+ GitHub (para control de versiones y trabajo colaborativo)
-
-
-🚀 Ejecución del Proyecto
-
-1. Clonar el repositorio
-
-git clone https://github.com/4drian04/Obtencion-Almacenamiento-Datos.git
-cd proyecto_futbol
-
-2. Instalar dependencias
-
-pip install requests matplotlib
-
-3. Ejecutar el script principal
-
+Bash
 python main.py
+python filtrado_polars.py
+python graficos_polars_interactivo.py
+
+Visualizaciones Incluidas
+Scatter Plot 2D: Relación entre la Diferencia de Goles y el Promedio de los Puntos por Partido. Ideal para ver la consistencia del equipo.
+
+Scatter Plot 3D: Un análisis multidimensional que cruza Puntos, Porcentaje de Victorias y Diferencia de Goles para clasificar el dominio de los equipos.
+
+Análisis Extraído de los Gráficos:
+El análisis realizado a través de las visualizaciones revela tres puntos clave sobre el rendimiento de los equipos:
+Correlación Lineal Dif. Goles/Promedio de Puntos: El gráfico de dispersión muestra una correlación positiva casi perfecta. Esto confirma que la "Diferencia de Goles" no es solo una métrica de desempate, sino un indicador predictivo del éxito. Los equipos con una diferencia superior a $+20$ rara vez caen por debajo del top 4 de sus ligas, teniendo un promedio de puntos elevado.
+Eficiencia en la Nube 3D: Al introducir el % de Victorias, observamos clusters de equipos. Los equipos en la parte superior del eje Z (Diferencia de Goles) y con alto % de victorias son los "dominadores absolutos". Aquellos con muchos puntos pero baja diferencia de goles sugieren una alta eficiencia defensiva (ganar por la mínima diferencia).
+Detección de Outliers: El gráfico 3D permite identificar equipos que tienen un alto porcentaje de victorias pero una diferencia de goles baja, lo que indica un estilo de juego más conservador.
 
 
-Esto creará (si no existe) la base de datos soccer.db y almacenará los datos obtenidos desde la API.
+Autores
 
-
-📊 Funcionalidades Extra
-
-- Generación de gráficas por liga (goles a favor y en contra).
-
-- Soporte para múltiples ligas (actualmente LaLiga y Premier League).
-
-
-📈 Posibles Ampliaciones
-
-+ Agregar más fuentes de datos:
-
-	- Otras ligas (liga alemana, argentina, etc.)
-
-+ Automatizar la actualización periódica mediante tareas programadas.
-
-+ Ampliar el modelo de datos para incluir jugadores y estadísticas individuales.
-
-+ Permitir el histórico de datos para mantener los datos de años y temporadas anteriores.
-
-
-👥 Autores
-
-
-Proyecto desarrollado por Adrián García García, David Caraballo Bulnes, Pablo Baeza Gómez, Eva María García Gálvez.
+Proyecto desarrollado por Eva María García Gálvez y Pablo Baeza Gómez.
