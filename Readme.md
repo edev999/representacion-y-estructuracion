@@ -179,14 +179,26 @@ Estas conclusiones complementan el análisis numérico y permiten una comprensi�
 
 ## Instalación y Uso
 
-Clona este repositorio.
+Clona este repositorio:
+
+```Bash
+git clone <URL-del-repo>
+cd <carpeta-del-repo>
+```
 
 *Instala las dependencias:*
 
+Opción 1: Instalación con pip (requirements.txt)
 ```Bash
 pip install -r requirements.txt
 ```
-*Ejecuta el script principal*
+
+Opción 2: Instalación con uv (pyproject.toml)
+```Bash
+uv sync
+```
+
+*Ejecuta los scripts*
 
 ```bash
 python main.py
