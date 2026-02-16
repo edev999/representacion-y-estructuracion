@@ -191,12 +191,13 @@ pip install -r requirements.txt
 ```bash
 python main.py
 python filtrado_polars.py
-python graficos_polars_interactivo.py
+python graficos_polars_analisis.py
 ```
 
 ### Autores
 
 Proyecto desarrollado por Eva María García Gálvez y Pablo Baeza Gómez.
+
 
 
 
