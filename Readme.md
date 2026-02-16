@@ -1,5 +1,7 @@
 # **Análisis de datos de ligas de fútbol**
 
+## Introducción
+
 Este proyecto desarrolla un pipeline completo de análisis de datos futbolísticos utilizando Polars y Plotly. A partir de un dataset de equipos y resultados almacenado en una base de datos SQLite, se lleva a cabo un proceso estructurado de extracción, transformación, carga y análisis visual. El objetivo es convertir los datos brutos en información clara, comparable y visualmente interpretable, permitiendo analizar el rendimiento de los equipos desde múltiples perspectivas.
 
 ## Características
@@ -81,7 +83,7 @@ Para generar un archivo .html se utiliza:
 fig.write_html("plots_output/nombre_del_grafico.html")
 ```
 
-4. Estructura del proyecto y archivos incluidos
+## 4. Estructura del proyecto y archivos incluidos
 
 
 ├── main.py                         # Pipeline principal del proyecto  
@@ -112,7 +114,7 @@ fig.write_html("plots_output/nombre_del_grafico.html")
 └── README.md                       # Documentación del proyecto  
 
 
-5. Ampliación (Opcional)
+## 5. Ampliación (Opcional)
 
 ## Fase exploratoria
 
@@ -195,6 +197,7 @@ python graficos_polars_interactivo.py
 ### Autores
 
 Proyecto desarrollado por Eva María García Gálvez y Pablo Baeza Gómez.
+
 
 
 
