@@ -84,32 +84,32 @@ fig.write_html("plots_output/nombre_del_grafico.html")
 4. Estructura del proyecto y archivos incluidos
 
 
-├── main.py                         # Pipeline principal del proyecto
-├── filtrado_polars.py              # Filtrado y cálculo de métricas con Polars
-├── graficos_polars_interactivo.py  # Visualizaciones interactivas con Plotly
-│
-├── filtrado_pandas.py              # Pipeline equivalente en Pandas (fase exploratoria)
-├── graficos_pandas.py              # Gráficos iniciales con Pandas
-│
-├── benchmark_pandas_vs_polars.py   # Comparación de rendimiento entre Pandas y Polars
-├── benchmark_csv_vs_parquet.py     # Evaluación CSV vs Parquet
-│
-├── data_output/                    # Resultados generados por el pipeline
-│   ├── equipos.csv
-│   ├── equipos.parquet
-│   ├── ranking_ofensivo.csv
-│   ├── top_victorias.csv
-│   └── resumen_liga.csv
-│
-├── plots_output/                   # Gráficos interactivos exportados en HTML
-│   ├── scatter_2d.html
-│   ├── scatter_3d.html
-│   ├── goles_favor_barras.html
-│   ├── dif_goles_barras.html
-│   ├── eficiencia_boxplot.html
-│   └── ...
-│
-└── README.md                       # Documentación del proyecto
+├── main.py                         # Pipeline principal del proyecto  
+├── filtrado_polars.py              # Filtrado y cálculo de métricas con Polars  
+├── graficos_polars_interactivo.py  # Visualizaciones interactivas con Plotly  
+│  
+├── filtrado_pandas.py              # Pipeline equivalente en Pandas (fase exploratoria)  
+├── graficos_pandas.py              # Gráficos iniciales con Pandas  
+│  
+├── benchmark_pandas_vs_polars.py   # Comparación de rendimiento entre Pandas y Polars  
+├── benchmark_csv_vs_parquet.py     # Evaluación CSV vs Parquet  
+│  
+├── data_output/                    # Resultados generados por el pipeline  
+│   ├── equipos.csv  
+│   ├── equipos.parquet  
+│   ├── ranking_ofensivo.csv  
+│   ├── top_victorias.csv  
+│   └── resumen_liga.csv  
+│  
+├── plots_output/                   # Gráficos interactivos exportados en HTML  
+│   ├── scatter_2d.html  
+│   ├── scatter_3d.html  
+│   ├── goles_favor_barras.html  
+│   ├── dif_goles_barras.html  
+│   ├── eficiencia_boxplot.html  
+│   └── ...  
+│  
+└── README.md                       # Documentación del proyecto  
 
 
 5. Ampliación (Opcional)
@@ -195,6 +195,7 @@ python graficos_polars_interactivo.py
 ### Autores
 
 Proyecto desarrollado por Eva María García Gálvez y Pablo Baeza Gómez.
+
 
 
 
