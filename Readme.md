@@ -37,7 +37,7 @@ El análisis realizado a través de las visualizaciones revela tres puntos clave
 *Correlación Lineal Dif. Goles/Promedio de Puntos:* 
 El gráfico de dispersión muestra una correlación positiva casi perfecta. Esto confirma que la "Diferencia de Goles" no es solo una métrica de desempate, sino un indicador predictivo del éxito. Los equipos con una diferencia superior a $+20$ rara vez caen por debajo del top 4 de sus ligas, teniendo un promedio de puntos elevado.
 
-*Eficiencia en la Nube 3D: *
+*Eficiencia en la Nube 3D:*
 Al introducir el % de Victorias, observamos clusters de equipos. Los equipos en la parte superior del eje Z (Diferencia de Goles) y con alto % de victorias son los "dominadores absolutos". Aquellos con muchos puntos pero baja diferencia de goles sugieren una alta eficiencia defensiva (ganar por la mínima diferencia).
 
 *Detección de Outliers:*
@@ -47,6 +47,7 @@ El gráfico 3D permite identificar equipos que tienen un alto porcentaje de vict
 ### Autores
 
 Proyecto desarrollado por Eva María García Gálvez y Pablo Baeza Gómez.
+
 
 
 
