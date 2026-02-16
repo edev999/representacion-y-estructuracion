@@ -1,24 +1,24 @@
 # **Análisis de datos de ligas de fútbol**
 
-## Introducción
+## 1. Introducción
 
 Este proyecto desarrolla un pipeline completo de análisis de datos futbolísticos utilizando Polars y Plotly. A partir de un dataset de equipos y resultados almacenado en una base de datos SQLite, se lleva a cabo un proceso estructurado de extracción, transformación, carga y análisis visual. El objetivo es convertir los datos brutos en información clara, comparable y visualmente interpretable, permitiendo analizar el rendimiento de los equipos desde múltiples perspectivas.
+
+## 2. Objetivos
+
+El proyecto persigue los siguientes objetivos:  
+- Extraer y cargar los datos desde una base de datos SQLite dentro de un flujo automatizado en Python.  
+- Aplicar técnicas de limpieza, filtrado y estructuración utilizando Polars.  
+- Generar métricas avanzadas como porcentaje de victorias, diferencia de goles y promedio de puntos por partido.  
+- Exportar los resultados en formatos estándar (CSV) y orientados a análisis de alto rendimiento (Parquet).  
+- Crear visualizaciones interactivas con Plotly que permitan identificar patrones, comparar equipos y explorar el dataset de forma dinámica.  
+- Evaluar el rendimiento de distintas tecnologías (Pandas vs Polars, CSV vs Parquet) como parte de la ampliación solicitada.  
 
 ## Características
 
 Ingesta: Uso de Polars para manejar grandes volúmenes de datos desde SQL, en este caso SQLite.
 
-## Objetivos
-
-El proyecto persigue los siguientes objetivos:
-Extraer y cargar los datos desde una base de datos SQLite dentro de un flujo automatizado en Python.
-Aplicar técnicas de limpieza, filtrado y estructuración utilizando Polars.
-Generar métricas avanzadas como porcentaje de victorias, diferencia de goles y promedio de puntos por partido.
-Exportar los resultados en formatos estándar (CSV) y orientados a análisis de alto rendimiento (Parquet).
-Crear visualizaciones interactivas con Plotly que permitan identificar patrones, comparar equipos y explorar el dataset de forma dinámica.
-Evaluar el rendimiento de distintas tecnologías (Pandas vs Polars, CSV vs Parquet) como parte de la ampliación solicitada.
-
-## Pasos
+## 3. Pasos
 
 ## Paso 1: Conexión
 
@@ -65,7 +65,7 @@ Goles a Favor por Equipo (barras): identifica qué equipos destacan ofensivament
 
 Diferencia de Goles por Equipo (barras): muestra qué equipos dominan en balance ofensivo‑defensivo.
 
-Puntos vs %Victorias (scatter): relaciona regularidad (puntos) y eficacia (victorias), con el tamaño indicando la diferencia de goles.
+Puntos vs % Victorias (scatter): relaciona regularidad (puntos) y eficacia (victorias), con el tamaño indicando la diferencia de goles.
 
 Diferencia de Goles vs Promedio de Puntos por Partido (scatter): confirma la correlación entre dominancia en el marcador y rendimiento competitivo.
 
