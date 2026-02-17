@@ -88,7 +88,7 @@ fig.write_html("plots_output/nombre_del_grafico.html")
 
 ├── main.py                         # Pipeline principal del proyecto  
 ├── filtrado_polars.py              # Filtrado y cálculo de métricas con Polars  
-├── graficos_polars_interactivo.py  # Visualizaciones interactivas con Plotly  
+├── graficos_polars_analisi.py  # Visualizaciones interactivas con Plotly  
 │  
 ├── filtrado_pandas.py              # Pipeline equivalente en Pandas (fase exploratoria)  
 ├── graficos_pandas.py              # Gráficos iniciales con Pandas  
@@ -104,15 +104,15 @@ fig.write_html("plots_output/nombre_del_grafico.html")
 │   └── resumen_liga.csv  
 │  
 ├── plots_output/                   # Gráficos interactivos exportados en HTML  
-│   ├── scatter_2d.html  
-│   ├── scatter_3d.html  
-│   ├── goles_favor_barras.html  
-│   ├── dif_goles_barras.html  
-│   ├── eficiencia_boxplot.html  
-│   └── ...  
+│   ├── goles_a_favor.html  
+│   ├── diferencia_goles.html  
+│   ├── puntos_vs_victorias.html 
+│   ├── difgoles_vs_prompuntos.html  
+│   ├── eficiencia_global_boxplot.html  
+│   ├── eficiencia_global_facetado.html  
+│   └── nube3d_puntos_victorias_difgoles.html  
 │  
 └── README.md                       # Documentación del proyecto  
-
 
 ## 5. Ampliación (Opcional)
 
@@ -177,34 +177,58 @@ La Eficiencia Global permite comparar ligas completas, no solo equipos individua
 Los outliers detectados ayudan a interpretar estrategias defensivas u ofensivas particulares.
 Estas conclusiones complementan el análisis numérico y permiten una comprensión más profunda del comportamiento competitivo de los equipos.
 
+"
 ## Instalación y Uso
 
-Clona este repositorio:
+1. *Clonar el repositorio*
 
 ```Bash
 git clone <URL-del-repo>
 cd <carpeta-del-repo>
 ```
 
-*Instala las dependencias:*
+2. *Instalar las dependencias*
 
-Opción 1: Instalación con pip (requirements.txt)
+Puedes elegir uno de los dos métodos:
+
+Opción 1: Usando pip (requirements.txt)
 ```Bash
 pip install -r requirements.txt
 ```
 
-Opción 2: Instalación con uv (pyproject.toml)
+Opción 2: Usando uv (pyproject.toml)
 ```Bash
 uv sync
 ```
 
-*Ejecuta los scripts*
+3. *Generar la base de datos (obligatorio)*
 
-```bash
+Este paso crea o actualiza soccer.db a partir de la API
+
+Con pip:
+```Bash
 python main.py
+```
+
+Con uv:
+```Bash
+uv run python main.py
+```
+
+4. *Procesar datos y generar visualizaciones*
+
+Con pip:
+```Bash
 python filtrado_polars.py
 python graficos_polars_analisis.py
 ```
+
+Con uv:
+```Bash
+uv run python filtrado_polars.py
+uv run python graficos_polars_analisis.py
+```
+"
 
 ### Autores
 

@@ -88,28 +88,39 @@ fig_dif_goles.show()
 # -------------------------------------------------------
 # 6. Gráfico 3: Puntos vs %Victorias (tamaño = DifGolesAbs)
 # -------------------------------------------------------
-
-df_puntos_victorias = (
-    df_pd
-    .assign(DifGolesAbs=lambda df: df["DifGoles"].abs())
-    .sort_values("DifGolesAbs")
+df_puntos_victorias = df_pd.assign(
+    DifGolesAbs = df_pd["DifGoles"].abs(),
+    Simbolo = np.where(df_pd["DifGoles"] < 0, "Negativa",
+                       np.where(df_pd["DifGoles"] > 0, "Positiva", "Cero"))
 )
+
+min_size = 5
+df_puntos_victorias["DifGolesSize"] = df_puntos_victorias["DifGolesAbs"] + min_size
+
+symbol_map = {
+    "Positiva": "circle",
+    "Negativa": "triangle-down",
+    "Cero": "star"
+}
 
 fig_puntos_victorias = px.scatter(
     df_puntos_victorias,
     x="Puntos",
     y="PorcVictorias",
     color="Liga",
+    symbol="Simbolo",
+    symbol_map=symbol_map,  
     hover_name="Equipo",
-    size="DifGolesAbs",
-    size_max=25,
+    size="DifGolesSize",
+    size_max=40,
     hover_data={
         "DifGoles": True,
         "GolesAFavor": True,
         "GolesEnContra": True,
-        "Puntos": True
+        "Puntos": True,
+        "DifGolesSize": False
     },
-    labels={"PorcVictorias": "% Victorias"}
+    labels={"PorcVictorias": "% Victorias", "Simbolo": "Diferencia"}
 )
 
 fig_puntos_victorias.update_layout(
