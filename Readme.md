@@ -176,7 +176,6 @@ La Eficiencia Global permite comparar ligas completas, no solo equipos individua
 Los outliers detectados ayudan a interpretar estrategias defensivas u ofensivas particulares.
 Estas conclusiones complementan el análisis numérico y permiten una comprensión más profunda del comportamiento competitivo de los equipos.
 
-"
 ## Instalación y Uso
 
 1. *Clonar el repositorio*
@@ -227,7 +226,6 @@ Con uv:
 uv run python filtrado_polars.py
 uv run python graficos_polars_analisis.py
 ```
-"
 
 ### Autores
 
