@@ -85,7 +85,6 @@ fig.write_html("plots_output/nombre_del_grafico.html")
 
 ## 4. Estructura del proyecto y archivos incluidos
 
-
 ├── main.py                         # Pipeline principal del proyecto  
 ├── filtrado_polars.py              # Filtrado y cálculo de métricas con Polars  
 ├── graficos_polars_analisi.py  # Visualizaciones interactivas con Plotly  
