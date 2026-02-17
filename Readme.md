@@ -223,13 +223,14 @@ python graficos_polars_analisis.py
 
 Con uv:
 ```Bash
-uv run python filtrado_polars.py
-uv run python graficos_polars_analisis.py
+uv run filtrado_polars.py
+uv run graficos_polars_analisis.py
 ```
 
 ### Autores
 
 Proyecto desarrollado por Eva María García Gálvez y Pablo Baeza Gómez.
+
 
 
 
