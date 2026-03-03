@@ -227,9 +227,17 @@ uv run filtrado_polars.py
 uv run graficos_polars_analisis.py
 ```
 
+### Graficación
+
+Análisis de datos a 03/03/2026 de los equipos de las ligas española, inglesa e italiana. 
+Dashboard 1 que incluye el análisis de los goles según ligas y equipos y la relación entre eficiencia y puntos.
+
+![Dashboard de Eficiencia](img/dashboard_pablo.png)
+
 ### Autores
 
 Proyecto desarrollado por Eva María García Gálvez y Pablo Baeza Gómez.
+
 
 
 
