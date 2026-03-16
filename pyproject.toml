@@ -5,10 +5,14 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "bs4>=0.0.2",
+    "lxml>=6.0.2",
     "matplotlib>=3.10.8",
     "pandas>=3.0.0",
     "plotly>=6.5.2",
     "polars>=1.38.1",
     "pyarrow>=23.0.0",
     "requests>=2.32.5",
+    "scikit-learn>=1.8.0",
+    "understatapi>=0.7.1",
 ]
