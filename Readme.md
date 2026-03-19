@@ -35,7 +35,7 @@ La base de datos SQLite (soccer.db) contiene la información extraída desde la 
 La estructura es sencilla: equipos, partidos y competiciones conectados entre sí mediante identificadores comunes. Una vez cargados los datos, se procede a su limpieza y transformación para generar los datasets necesarios para el análisis.
 
 ### Arquitectura del sistema
-```
+```mermaid
 flowchart LR
     A[API ESPN] --> B[SQLite Database]
     B --> C[Polars Data Processing]
