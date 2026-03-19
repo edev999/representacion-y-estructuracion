@@ -101,7 +101,7 @@ El proyecto organiza la información en tres tablas interconectadas que separan 
 Este diagrama muestra cómo se conectan las tablas mediante sus identificadores únicos:
 
 ```mermaid
----
+
 erDiagram
     league ||--o{ teams : "contains"
     teams ||--o| stats : "has"
