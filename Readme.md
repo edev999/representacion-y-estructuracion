@@ -2,9 +2,17 @@
 
 ## 1. Introducción
 
-Este proyecto desarrolla un pipeline completo de análisis de datos futbolísticos utilizando Polars y Plotly. A partir de un dataset de equipos y resultados almacenado en una base de datos SQLite, se lleva a cabo un proceso estructurado de extracción, transformación, carga y análisis visual. El objetivo es convertir los datos brutos en información clara, comparable y visualmente interpretable, permitiendo analizar el rendimiento de los equipos desde múltiples perspectivas.
+Tras haber automatizado la obtención y el almacenamiento de datos en la práctica 1.7, pasamos a la fase de Data Preparation. En esta etapa trabajamos con un conjunto de datos futbolísticos almacenados en SQLite, centrado en equipos, partidos y resultados.
+
+El objetivo es limpiar, estructurar y transformar esta información para obtener datasets fiables y listos para análisis posteriores. Para ello se utiliza Polars en el procesamiento y Plotly en la generación de visualizaciones iniciales que ayudan a validar el estado del dataset y detectar patrones básicos.
 
 ## 2. Objetivos
+
+Los datos utilizados en este proyecto proceden de la API pública de ESPN, desde la cual se extrajo información sobre equipos, partidos y resultados. Todo el contenido recopilado se estructuró y almacenó en una base de datos SQLite, generando el archivo soccer.db.
+
+Este archivo incluye varias tablas relacionadas con competiciones, equipos y encuentros, que sirven como base para las tareas de preparación y análisis realizadas en esta práctica.
+
+## 3. Objetivos
 
 El proyecto persigue los siguientes objetivos:  
 - Extraer y cargar los datos desde una base de datos SQLite dentro de un flujo automatizado en Python.  
@@ -18,11 +26,119 @@ El proyecto persigue los siguientes objetivos:
 
 Ingesta: Uso de Polars para manejar grandes volúmenes de datos desde SQL, en este caso SQLite.
 
-## 3. Pasos
+## 4. Pasos
 
-## Paso 1: Conexión
+## Paso 1: Conexión y estructura
 
-Se establece la conexión con la base de datos SQLite y se extraen las tablas necesarias para cargarlas directamente en Polars mediante los métodos de lectura adecuados, asegurando una importación eficiente como punto de partida del análisis.
+La base de datos SQLite (soccer.db) contiene la información extraída desde la API de ESPN, organizada en tablas relacionadas con equipos, partidos y competiciones. Desde Python se establece la conexión y se cargan estas tablas en Polars para iniciar el proceso de preparación de datos.
+
+La estructura es sencilla: equipos, partidos y competiciones conectados entre sí mediante identificadores comunes. Una vez cargados los datos, se procede a su limpieza y transformación para generar los datasets necesarios para el análisis.
+
+### Arquitectura del sistema
+```
+flowchart LR
+    A[API ESPN] --> B[SQLite Database]
+    B --> C[Polars Data Processing]
+    C --> D[Feature Engineering]
+    D --> E[Visualizations with Plotly]
+    D --> F[Machine Learning Models]
+    F --> G[Streamlit Dashboard]
+```
+
+### Estructura de la Base de Datos (SQLite)
+
+El proyecto organiza la información en tres tablas interconectadas que separan la identidad de las ligas y equipos de sus resultados deportivos:
+
+| Tabla | Función | Descripción / Métricas Clave |
+| :--- | :--- | :--- |
+| **`league`** | Competición | Registro maestro de ligas y temporadas (ej: "LaLiga"). |
+| **`teams`** | Identidad | Catálogo de equipos, escudos y su vinculación a cada liga. |
+| **`stats`** | Rendimiento | Puntos, goles (a favor/en contra), victorias y posición. |
+
+**Detalle de las tablas:**
+* **`league`**: Tabla maestra de la competición. Normaliza el nombre de la liga y el año de la temporada.
+* **`teams`**: Identifica a los clubes mediante su nombre oficial y el enlace a su escudo (**logo**).
+* **`stats`**: Registra el desempeño deportivo acumulado, sirviendo como base para el cálculo de eficiencias y predicciones.
+
+---
+
+#### 1. Tabla: `league` (Competiciones)
+
+| Campo | Tipo | Descripción | Ejemplo |
+| :--- | :--- | :--- | :--- |
+| **id** | INTEGER (PK) | Identificador único de la liga. | 1 |
+| **name** | TEXT | Nombre oficial de la competición. | LaLiga |
+| **year** | INTEGER | Año de la temporada. | 2024 |
+
+#### 2. Tabla: `teams` (Equipos)
+
+| Campo | Tipo | Descripción | Ejemplo |
+| :--- | :--- | :--- | :--- |
+| **id** | INTEGER (PK) | Identificador único del equipo. | 1 |
+| **name** | TEXT | Nombre completo del club. | Real Madrid |
+| **logo** | TEXT | URL de la imagen del escudo. | https://... |
+| **league_id** | INTEGER (FK) | Relación con la tabla `league`. | 1 |
+
+#### 3. Tabla: `stats` (Estadísticas)
+
+| Campo | Tipo | Descripción | Ejemplo |
+| :--- | :--- | :--- | :--- |
+| **id** | INTEGER (PK) | Identificador del registro. | 1 |
+| **team_id** | INTEGER (FK) | Relación con la tabla `teams`. | 1 |
+| **points** | INTEGER | Puntos totales acumulados. | 85 |
+| **played** | INTEGER | Partidos jugados. | 38 |
+| **goals_for** | INTEGER | Goles a favor (ofensiva). | 70 |
+| **goals_against** | INTEGER | Goles en contra (defensiva). | 30 |
+| **wins/draws/losses** | INTEGER | Desglose de resultados (V/E/D). | 27 / 4 / 7 |
+| **position** | TEXT | Puesto en la clasificación. | 1 |
+
+> **Nota:** Las relaciones se mantienen mediante claves foráneas (`league_id` y `team_id`), garantizando la integridad de los datos al cruzar información entre tablas.
+
+---
+
+### Modelo Entidad-Relación (ER)
+
+Este diagrama muestra cómo se conectan las tablas mediante sus identificadores únicos:
+
+```mermaid
+---
+erDiagram
+    league ||--o{ teams : "contains"
+    teams ||--o| stats : "has"
+
+    league {
+        INTEGER id PK
+        TEXT name
+        INTEGER year
+    }
+
+    teams {
+        INTEGER id PK
+        TEXT name
+        TEXT logo
+        INTEGER league_id FK
+    }
+
+    stats {
+        INTEGER id PK
+        INTEGER team_id FK
+        INTEGER points
+        INTEGER played
+        INTEGER goals_against
+        INTEGER goals_for
+        INTEGER wins
+        INTEGER draws
+        INTEGER losses
+        TEXT position
+    }
+```
+
+**Legend**
+
+- PK → Primary Key  
+- FK → Foreign Key
+
+---
 
 ## Paso 2: Limpieza y Estructuración con Polars
 
@@ -83,37 +199,40 @@ Para generar un archivo .html se utiliza:
 fig.write_html("plots_output/nombre_del_grafico.html")
 ```
 
-## 4. Estructura del proyecto y archivos incluidos
+## 5. Estructura del proyecto y archivos incluidos
 
-├── main.py                         # Pipeline principal del proyecto  
-├── filtrado_polars.py              # Filtrado y cálculo de métricas con Polars  
-├── graficos_polars_analisi.py  # Visualizaciones interactivas con Plotly  
-│  
-├── filtrado_pandas.py              # Pipeline equivalente en Pandas (fase exploratoria)  
-├── graficos_pandas.py              # Gráficos iniciales con Pandas  
-│  
-├── benchmark_pandas_vs_polars.py   # Comparación de rendimiento entre Pandas y Polars  
-├── benchmark_csv_vs_parquet.py     # Evaluación CSV vs Parquet  
-│  
-├── data_output/                    # Resultados generados por el pipeline  
-│   ├── equipos.csv  
-│   ├── equipos.parquet  
-│   ├── ranking_ofensivo.csv  
-│   ├── top_victorias.csv  
-│   └── resumen_liga.csv  
-│  
-├── plots_output/                   # Gráficos interactivos exportados en HTML  
-│   ├── goles_a_favor.html  
-│   ├── diferencia_goles.html  
-│   ├── puntos_vs_victorias.html 
-│   ├── difgoles_vs_prompuntos.html  
-│   ├── eficiencia_global_boxplot.html  
-│   ├── eficiencia_global_facetado.html  
-│   └── nube3d_puntos_victorias_difgoles.html  
-│  
-└── README.md                       # Documentación del proyecto  
+```text
+📁 Proyecto
+├── 📄 main.py                       # Pipeline principal del proyecto
+├── 📄 filtrado_polars.py            # Filtrado y cálculo de métricas con Polars
+├── 📄 graficos_polars_analisi.py    # Visualizaciones interactivas con Plotly
+│
+├── 📄 filtrado_pandas.py            # Pipeline equivalente en Pandas (fase exploratoria)
+├── 📄 graficos_pandas.py            # Gráficos iniciales con Pandas
+│
+├── 📄 benchmark_pandas_vs_polars.py # Comparación de rendimiento entre Pandas y Polars
+├── 📄 benchmark_csv_vs_parquet.py   # Evaluación CSV vs Parquet
+│
+├── 📁 data_output/                  # Resultados generados por el pipeline
+│   ├── 📄 equipos.csv
+│   ├── 📄 equipos.parquet
+│   ├── 📄 ranking_ofensivo.csv
+│   ├── 📄 top_victorias.csv
+│   └── 📄 resumen_liga.csv
+│
+├── 📁 plots_output/                 # Gráficos interactivos exportados en HTML
+│   ├── 📄 goles_a_favor.html
+│   ├── 📄 diferencia_goles.html
+│   ├── 📄 puntos_vs_victorias.html
+│   ├── 📄 difgoles_vs_prompuntos.html
+│   ├── 📄 eficiencia_global_boxplot.html
+│   ├── 📄 eficiencia_global_facetado.html
+│   └── 📄 nube3d_puntos_victorias_difgoles.html
+│
+└── 📄 README.md                     # Documentación del proyecto
+```
 
-## 5. Ampliación (Opcional)
+## 6. Ampliación (Opcional)
 
 ## Fase exploratoria
 
