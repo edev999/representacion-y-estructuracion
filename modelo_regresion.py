@@ -187,3 +187,7 @@ else:
     print("Conclusión: el mercado incluye factores adicionales (marketing, potencial, reputación).")
 
 print("="*40)
+
+
+df_plot.to_csv("data_output/datos_jugadores_modelado.csv", index=False)
+print("\nArchivo 'datos_jugadores_modelado.csv' generado con éxito.")
