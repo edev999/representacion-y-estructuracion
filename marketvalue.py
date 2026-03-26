@@ -7,6 +7,29 @@ import sys
 import re
 sys.stdout.reconfigure(encoding='utf-8')
 
+position_map = {
+    "Centre-Forward": "ST",
+    "Second Striker": "ST",
+
+    "Left Winger": "ST",
+    "Right Winger": "ST",
+
+    "Attacking Midfield": "CM",
+
+    "Central Midfield": "CM",
+    "Left Midfield": "CM",
+    "Right Midfield": "CM",
+
+    "Defensive Midfield": "CM",
+
+    "Left-Back": "CB",
+    "Right-Back": "CB",
+    "Centre-Back": "CB",
+
+    "Goalkeeper": "GK"
+}
+
+
 def limpiar_nombre(nombre):
     if pd.isna(nombre):
         return ""
@@ -97,6 +120,7 @@ def main():
     league_names = []
     values = []
     ages = []
+    positions = []
 
     for league, code in leagues.items():
         print("Descargando:", league)
@@ -141,6 +165,12 @@ def main():
                             ages.append(None)
                     else:
                         ages.append(None)
+                        # Posicion
+                    pos_tag = row.select_one("table.inline-table tr:nth-of-type(2) td")
+                    if pos_tag:
+                        positions.append(pos_tag.text.strip())
+                    else:
+                        positions.append("Unknown")
 
     # Crear dataframe
     df = pd.DataFrame({
@@ -149,8 +179,10 @@ def main():
         "Nationality": nationalities,
         "League": league_names,
         "Age": ages,
+        "Position": positions,
         "MarketValue": values
     })
+    df["Position"] = df["Position"].map(position_map).fillna(df["Position"])
     league_map = {
         "PremierLeague": "EPL",
         "LaLiga": "La_Liga",
@@ -188,7 +220,7 @@ def main():
     cols_numericas = ['goals', 'time', 'assists', 'xG', 'xA']
 
     # Columnas que quieres mantener de Transfermarkt (puedes ajustar si quieres más)
-    cols_transfermarkt = ['Player', 'Team', 'Nationality', 'Age', 'League', 'MarketValue']
+    cols_transfermarkt = ['Player', 'Team', 'Nationality', 'Age', 'League', "Position", 'MarketValue']
 
     # Seleccionar solo esas columnas de cada dataframe en el combinado
     df_merged_reducido = df_merged[cols_transfermarkt + [col for col in cols_numericas if col in df_merged.columns]]
