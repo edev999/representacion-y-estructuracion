@@ -1,6 +1,7 @@
 import pandas as pd
+import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import RidgeCV
 from sklearn.metrics import mean_absolute_error, r2_score
 from sklearn.preprocessing import StandardScaler
 import plotly.express as px
@@ -24,8 +25,8 @@ if 'xG' in df.columns:
 if 'xA' in df.columns:
     features.append('xA')
 
-X = df[features]        # Variables explicativas
-y = df['MarketValue']   # Variable objetivo
+X = df[features]                # Variables explicativas
+y = np.log1p(df['MarketValue']) # Variable objetivo (escala logarítmica)
 
 
 # 3. Dividir datos para entrenamiento y validación (80 / 20)
@@ -41,13 +42,23 @@ X_test_scaled = scaler.transform(X_test)        # Aplicar el mismo scaler al tes
 
 
 # 5. Entrenar modelo
-modelo = LinearRegression()
+alphas = np.logspace(-3, 3, 50)
+
+modelo = RidgeCV(
+    alphas=alphas,
+    cv=5
+)
+
 modelo.fit(X_train_scaled, y_train)
+
+print(f"Mejor alpha encontrado: {modelo.alpha_}")
 
 
 # 6. Predecir el valor estimado para todos los jugadores
 X_all_scaled = scaler.transform(X)
-y_all_pred = modelo.predict(X_all_scaled)
+
+# Reconvertir desde logaritmo a euros reales
+y_all_pred = np.expm1(modelo.predict(X_all_scaled))
 
 
 # 7. Preparar dataframe para visualización
@@ -65,9 +76,11 @@ df_plot.loc[X_test.index, 'Origen'] = 'Validación (Test)'
 
 
 # 8. Evaluación del modelo
-y_test_pred = modelo.predict(X_test_scaled)
-r2 = r2_score(y_test, y_test_pred)                # Calidad de la predicción
-mae = mean_absolute_error(y_test, y_test_pred)    # Error medio en euros
+y_test_pred = np.expm1(modelo.predict(X_test_scaled))
+y_test_real = np.expm1(y_test)
+
+r2 = r2_score(y_test_real, y_test_pred)             # Calidad de la predicción
+mae = mean_absolute_error(y_test_real, y_test_pred) # Error medio en euros
 
 
 # 9. Gráfico técnico (train/test + ligas): valor real vs valor estimado
@@ -176,6 +189,7 @@ print("="*40)
 print(f"Muestra entrenamiento (80%): {len(X_train)} jugadores")
 print(f"Muestra validación (20%): {len(X_test)} jugadores")
 print("-" * 40)
+print(f"Mejor alpha Ridge: {modelo.alpha_}")
 print(f"R2 del modelo: {r2:.2f}")
 print(f"Error medio de predicción: {mae:,.0f} €")
 print("-" * 40)
