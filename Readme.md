@@ -98,46 +98,41 @@ El proyecto organiza la información en tres tablas interconectadas que separan 
 
 ### Modelo Entidad-Relación (ER)
 
-Este diagrama muestra cómo se conectan las tablas mediante sus identificadores únicos:
-
 ```mermaid
-
 erDiagram
-    league ||--o{ teams : "contains"
-    teams ||--o| stats : "has"
+    league ||--o{ teams : contains
+    teams ||--o| stats : has
 
     league {
-        INTEGER id PK
+        INT id PK
         TEXT name
-        INTEGER year
+        INT year
     }
 
     teams {
-        INTEGER id PK
+        INT id PK
         TEXT name
         TEXT logo
-        INTEGER league_id FK
+        INT league_id FK
     }
 
     stats {
-        INTEGER id PK
-        INTEGER team_id FK
-        INTEGER points
-        INTEGER played
-        INTEGER goals_against
-        INTEGER goals_for
-        INTEGER wins
-        INTEGER draws
-        INTEGER losses
+        INT id PK
+        INT team_id FK
+        INT points
+        INT played
+        INT goals_for
+        INT goals_against
+        INT wins
+        INT draws
+        INT losses
         TEXT position
     }
 ```
 
 **Legend**
-
-- PK → Primary Key  
+- PK → Primary Key
 - FK → Foreign Key
-
 ---
 
 ## Paso 2: Limpieza y Estructuración con Polars
@@ -295,63 +290,94 @@ La Eficiencia Global permite comparar ligas completas, no solo equipos individua
 Los outliers detectados ayudan a interpretar estrategias defensivas u ofensivas particulares.
 Estas conclusiones complementan el análisis numérico y permiten una comprensión más profunda del comportamiento competitivo de los equipos.
 
+
 ## Instalación y Uso
 
-1. *Clonar el repositorio*
+### 1. Clonar el repositorio
 
-```Bash
+```bash
 git clone <URL-del-repo>
 cd <carpeta-del-repo>
 ```
 
-2. *Instalar las dependencias*
+---
 
-Puedes elegir uno de los dos métodos:
+### Opción 1 — Usando pip (`requirements.txt`)
 
-Opción 1: Usando pip (requirements.txt)
-```Bash
+#### 2. Instalar dependencias
+
+```bash
 pip install -r requirements.txt
 ```
 
-Opción 2: Usando uv (pyproject.toml)
-```Bash
-uv sync
-```
+#### 3. Generar la base de datos
 
-3. *Generar la base de datos (obligatorio)*
+Este paso crea o actualiza `soccer.db` a partir de la API.
 
-Este paso crea o actualiza soccer.db a partir de la API
-
-Con pip:
-```Bash
+```bash
 python main.py
 ```
 
-Con uv:
-```Bash
-uv run python main.py
-```
+#### 4. Procesar datos y generar visualizaciones
 
-4. *Procesar datos y generar visualizaciones*
-
-Con pip:
-```Bash
+```bash
 python filtrado_polars.py
 python graficos_polars_analisis.py
 ```
 
-Con uv:
-```Bash
+---
+
+### Opción 2 — Usando uv (`pyproject.toml`)
+
+#### 2. Sincronizar entorno
+
+```bash
+uv sync
+```
+
+#### 3. Generar la base de datos
+
+Este paso crea o actualiza `soccer.db` a partir de la API.
+
+```bash
+uv run main.py
+```
+
+#### 4. Procesar datos y generar visualizaciones
+
+```bash
 uv run filtrado_polars.py
 uv run graficos_polars_analisis.py
 ```
 
-### Graficación
+
+## Graficación
+
+### 1️⃣ Primer Cuadro de Mando: Análisis Rendimiento de Equipos y Eficiencia por Ligas
 
 Análisis de datos a 03/03/2026 de los equipos de las ligas española, inglesa e italiana. 
 Dashboard 1 que incluye el análisis de los goles según ligas y equipos y la relación entre eficiencia y puntos.
 
 ![Dashboard de Eficiencia](img/dashboard_pablo.png)
+
+### 2️⃣ Segundo Cuadro de Mando: Análisis Impacto Geográfico y Valor de Mercado
+Este segundo cuadro de mando analiza el impacto de la nacionalidad en el éxito deportivo y económico, además del rendimiento de los clubes.
+
+#### 🌍 Bloque 1: Impacto por País
+* **Mapa global:** Distribución geográfica de los goleadores.
+* **Gráfico comparativo:** Relación entre el valor de mercado y los goles anotados según el país de origen.
+
+#### 🏆 Bloque 2: Eficacia de los Clubes
+* **Gráfico de dispersión:** Correlación entre puntos obtenidos y goles a favor.
+* **Tabla de resumen:** Desglose del rendimiento integral de LaLiga, Premier League y Serie A.
+
+![Análisis Impacto Geográfico y Valor de Mercado](img/analisis_impacto_geografico_valor_mercado.png)
+
+---
+
+🔗 [Acceder al cuadro de mando-interactivo](https://acortar.link/RzT8nx)
+
+---
 
 ### Autores
 
